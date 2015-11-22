@@ -17,16 +17,17 @@ e quanto custa.
 
 À imagem do capítulo anterior, considerou-se a duração de cada atividade
 e a suas precedências como parâmetros, bem como os custos de redução e normais
-daquelas. Ao contrário das partes anteriores, usou-se os custos normais na construção do modelo. A inclusão deste custos no modelo nesta parte justifica-se pela conveniência no
-cálculo dos custos totais em cada unidade que se pretende decrementar, que está
-explicado sucintamente mais abaixo neste capítulo.
+daquelas. Ao contrário das partes anteriores, usou-se os custos normais na
+construção do modelo. A inclusão deste custos no modelo nesta parte justifica-se
+pela conveniência no cálculo dos custos totais em cada unidade que se pretende
+decrementar, que está explicado sucintamente mais abaixo neste capítulo.
 
 \subsection{Variáveis de decisão}
 
-As variáveis de decisão são as mesmas que as descritas no Capítulo \ref{cap:p3}, secção
- \ref{p3:vardec}.\ Ou seja, pretende-se decidir qual as reduções necessárias em cada
-atividade, com o menor custo total. As reduções são descritas como
-anteriormente: 
+As variáveis de decisão são as mesmas que as descritas no Capítulo~\ref{cap:p3},
+secção~\ref{p3:vardec}.\ Ou seja, pretende-se decidir qual as reduções
+necessárias em cada atividade, com o menor custo total. As reduções são
+descritas como anteriormente: 
 $$R_i, \forall i \in \{ini, 0, 1, 3, 4,5,6,7,9,10,11,fim\}$$
 
 De igual modo, se inclui os tempos de inicio de atividade, à semelhança do
@@ -34,18 +35,24 @@ capítulo anterior:
 
 $$T_i, \forall i \in \{ini, 0, 1, 3, 4,5,6,7,9,10,11,fim\}$$
 
-O significado destas últimas variáveis mantém-se (ver Capítulo \ref{cap:p3}, secção \ref{p3:vardec}).
+O significado destas últimas variáveis mantém-se (ver Capítulo~\ref{cap:p3},
+secção~\ref{p3:vardec}).
 
 
 \subsection{Função Objetivo}
  
 A função objetivo sofreu uma modificação em relação ao modelo do capítulo
-anterior. Nesta parte, acrescentou-se o custo normal da cada atividade à função objetivo. Assim, a função objetivo agora não representa o custo total suplementar das reduções e passa a representar o custo total do projeto, que engloba os custos normais e os custos suplementares. Continua-se a querer minimizar os custos de redução de forma ótima, apenas se
-inclui o custo normal da cada atividade. Note-se que, a soma de todos os custos
-normais não influência o valor das variável de decisão (ao contrário dos
-custos de redução), uma vez que todas as atividades têm que ser realizadas e os seus custos normais são fixos.
-Assim, o valor da função objetivo permite saber o custo total (custos normais
-mais custos de redução) para redução de tempo que se pretende efetuar ao projeto.
+anterior. Nesta parte, acrescentou-se o custo normal da cada atividade à função
+objetivo. Assim, a função objetivo agora não representa o custo total
+suplementar das reduções e passa a representar o custo total do projeto, que
+engloba os custos normais e os custos suplementares. Continua-se a querer
+minimizar os custos de redução de forma ótima, apenas se inclui o custo normal
+da cada atividade. Note-se que, a soma de todos os custos normais não influência
+o valor das variável de decisão (ao contrário dos custos de redução), uma vez
+que todas as atividades têm que ser realizadas e os seus custos normais são
+fixos.  Assim, o valor da função objetivo permite saber o custo total (custos
+normais mais custos de redução) para redução de tempo que se pretende efetuar ao
+projeto.
 
 
 A função objetivo, para cada atividade $i \in \{ini, 0, 1, 3,
@@ -78,14 +85,19 @@ Concretizando os valores na função:
 
 \subsection{Restrições}
 
-As restrições são iguais às da Parte III, com a exceção da restrição do
-tempo final do projeto, onde, ao invés de subtrair 3 unidades de tempo ao tempo
-do caminho crítico do projeto, considerou-se uma redução gradual (de 1 unidade de tempo) em cada
-execução do modelo no \texttt{lp\_solve}, de forma a obter um custo total para
-cada valor de redução, e por isso de cada tempo total de execução do projeto. O ponto de partida foi o tempo do projeto obtido na Parte I, de 26 unidades de tempo e a partir dai analisou-se todas as possibilidades redução de tempo até uma redução máxima de 26 unidades de tempo, que corresponde a uma duração nula do projeto. Reduções muito elevadas são impossiveis como seria de esperar, no entanto por uma questão de completudo, consideraram-se todas as possibilidades. Um
-\emph{script} em \texttt{BASH} foi criado para o efeito, para executar todos os
-modelos. Assim sendo, para cada execução do modelo a restrição do tempo final
-fica:
+As restrições são iguais às da Parte III, com a exceção da restrição do tempo
+final do projeto, onde, ao invés de subtrair 3 unidades de tempo ao tempo do
+caminho crítico do projeto, considerou-se uma redução gradual (de 1 unidade de
+tempo) em cada execução do modelo no \texttt{lp\_solve}, de forma a obter um
+custo total para cada valor de redução, e por isso de cada tempo total de
+execução do projeto. O ponto de partida foi o tempo do projeto obtido na Parte
+I, de 26 unidades de tempo e a partir dai analisou-se todas as possibilidades
+redução de tempo até uma redução máxima de 26 unidades de tempo, que corresponde
+a uma duração nula do projeto. Reduções muito elevadas são impossíveis como
+seria de esperar, no entanto por uma questão de completude, consideraram-se
+todas as possibilidades. Um \emph{script} em \texttt{BASH} foi criado para
+o efeito, para executar todos os modelos. Assim sendo, para cada execução do
+modelo a restrição do tempo final fica:
 
 $$ T_{fim} = T_{\text{caminho crítico}} - R_{\text{total desejada}}$$
 
@@ -172,27 +184,40 @@ o \texttt{lp\_solve} não consegue resolver o modelo, e portanto o output do scr
 possível é de 7 unidades de tempo, que representa realizar o projeto em 19 unidades de tempo, com o custo total de 12280 unidades
 monetárias.
 
-A tabela \ref{p4:tab:custos} associa as reduções possíveis ao tempo total do projeto e respetivo custo total de execução do mesmo.
+A tabela~\ref{p4:tab:custos} associa as reduções possíveis ao tempo total do projeto e respetivo custo total de execução do mesmo.
 
 \input{./table/tabela1}
- O gráfico \ref{p4:fig:grafico1} foi elaborado com base na tabela \ref{p4:tab:custos} e mostra o custo total do projeto para cada valor de redução de tempo possíveis.
+ O gráfico~\ref{p4:fig:grafico1} foi elaborado com base na
+ tabela~\ref{p4:tab:custos} e mostra o custo total do projeto para cada valor de
+ redução de tempo possíveis.
 
 \input{./fig/figura1}
 
-O gráfico \ref{p4:fig:grafico2} mostra o custo total do projeto para cada valor de duração do projeto.
+O gráfico~\ref{p4:fig:grafico2} mostra o custo total do projeto para cada valor de duração do projeto.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{./img/p4_grafico2}
-	\caption{Gráfico com custo total em função da duração do projeto}
-	\label{p4:fig:grafico2}
-\end{figure}
+\input{./fig/figura2}
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[scale=0.8]{./img/p4_grafico2}
+%	\caption{Gráfico com custo total em função da duração do projeto}
+%	\label{p4:fig:grafico2}
+%\end{figure}
 
 Foram omitidos do gráfico reduções de tempo para as quais não existe solução do modelo.
 
-Os resultados mostram que a duração projeto pode ser reduzida no máximo em 7 unidades  de tempo (duração total de 19 u.t) com um custo total de 12280 unidades monetárias. De igual modo, entre
-a duração do projeto sem reduções e redução máxima existem mais 6 possíveis
-reduções, com um custo entre 9790 U.T. e 11180 U.M. (não incluindo a máxima
-redução).
+Os resultados mostram que a duração projeto pode ser reduzida no máximo em
+7 unidades  de tempo (duração total de 19 u.t) com um custo total de 12280
+unidades monetárias. De igual modo, entre a duração do projeto sem reduções
+e redução máxima existem mais 6 possíveis reduções, com um custo entre 9790 U.T.
+e 11180 U.M. (não incluindo a máxima redução).
 
-Através do gráfico \ref{p4:fig:grafico2} é possível perceber os vários compromissos entre a duração total do projeto e o custo total. Nomeadamente, o gráfico sugere que para durações do projeto próximas da inicial (26 unidades de tempo), cada redução adicional não acarreta um aumento nos custos significativo. No entanto, tal já não acontece para durações do projeto mais pequenas, onde cada redução adicional tem custos suplementares elevados. Esse fator pode ser visto no gráfico pelos declives das rectas que unem os vários pontos, que vai aumentando, até ao ponto em que o problema é impossível e não é possível terminar o projeto num tempo menor.
+Através do gráfico~\ref{p4:fig:grafico2} é possível perceber os vários
+compromissos entre a duração total do projeto e o custo total. Nomeadamente,
+o gráfico sugere que para durações do projeto próximas da inicial (26 unidades
+de tempo), cada redução adicional não acarreta um aumento nos custos
+significativo. No entanto, tal já não acontece para durações do projeto mais
+pequenas, onde cada redução adicional tem custos suplementares elevados. Esse
+fator pode ser visto no gráfico pelos declives das retas que unem os vários
+pontos, que vai aumentando, até ao ponto em que o problema é impossível e não
+é possível terminar o projeto num tempo menor.

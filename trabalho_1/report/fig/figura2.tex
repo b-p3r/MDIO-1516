@@ -1,0 +1,23 @@
+\begin{figure}[H]
+\centering
+\resizebox{0.7\textwidth}{!}{%
+\begin{tikzpicture}
+
+	\begin{axis}
+		    [
+					title={Custo Total do Projeto},
+	scaled ticks=false,
+	xtick={19,20,21,22,23,24, 25, 26},
+	grid=major,
+	xlabel={Duração Total [U.T.]},
+	ylabel={Custo Total [U.M.]},
+				]
+				\addplot [black, mark=*] table [x=red,y=custo] {data/res2.txt};
+		\end{axis}
+\end{tikzpicture}
+}%
+\caption{Gráfico do custo total do projeto em função da duração do projeto}
+\label{p4:fig:grafico2}
+\end{figure}
+
+
