@@ -24,6 +24,25 @@
 %identa 1º paragrafo de capitulos e secções
 \usepackage{indentfirst}
 
+
+
+\usepackage[]{hyperref}
+\hypersetup{
+%pdftitle={Trabalho 1 - Gestão de Projeto},
+%pdfauthor={Bruno Pereira},
+%pdfsubject={Investigação Operacional},
+%pdfkeywords={keyword1, keyword2}},
+bookmarksnumbered=true,     
+bookmarksopen=true,         
+bookmarksopenlevel=1,       
+colorlinks=true,            
+pdfstartview=Fit,           
+pdfpagemode=UseOutlines, % this is the option you were lookin for
+pdfpagelayout=TwoPageRight
+		}
+%\hypersetup{pdftex,colorlinks=true,allcolors=blue}
+%\usepackage{hypcap}
+
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \titleformat{\chapter}{\normalfont\huge}{\thechapter.}{20pt}{\huge}
 
@@ -45,10 +64,10 @@ a uma parte do trabalho.
 \tableofcontents
 
 \input{./chapters/parte1}
-\input{./chapters/parte2}
-\input{./chapters/parte3}
-\input{./chapters/parte4}
-\input{./chapters/parte5}
+%\input{./chapters/parte2}
+%\input{./chapters/parte3}
+%\input{./chapters/parte4}
+%\input{./chapters/parte5}
 
 \end {document}
 
