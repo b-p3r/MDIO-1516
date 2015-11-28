@@ -3,47 +3,59 @@
 
 \section{Análise Problema}
 
-Na Parte I o problema tratava de achar o caminho mais longo de uma rede. Nesta
-parte, partindo da mesma rede, pretende-se descobrir o tempo em que cada
+O problema do Trabalho 1 tratava da descoberta do tempo em que cada
 atividade é iniciada, sabendo que todas as atividades são realizadas.
 
-\section{Modelo}
+
+
+\section{Modelo Primal --- Trabalho 1}
 
 \subsection{Parâmetros}
 
-À semelhança da Parte I, também aqui os parâmetros do problema são a duração de
-cada atividade e as suas precedências.
+Os parâmetros do problema são a duração de cada atividade e as suas
+precedências.
 
 \subsection{Variáveis de decisão}
 
 As variáveis de decisão correspondem ao tempo em que cada atividade é iniciada.
 Assim, a cada atividade está associada uma variável de decisão. Relativamente ao
 nome, a opção tomada foi a de considerar $T_{i}$ como o tempo de início da
-atividade $i$ (em unidades de tempo arbitrárias), em que $i$ corresponde ao número da atividade. Uma vez que apenas se pretende conhecer os tempos de início de cada atividade, estas são as únicas variáveis deste modelo. 
+atividade $i$ (em unidades de tempo arbitrárias), em que $i$ corresponde ao
+número da atividade. Uma vez que apenas se pretende conhecer os tempos de início
+de cada atividade, estas são as únicas variáveis deste modelo. 
 
 \subsection{Função Objetivo}
 
 Neste modelo, quer-se minimizar o tempo de execução total do projeto. Isso
 corresponde a dizer que queremos que a atividade final seja iniciada o mais cedo
 possível. A atividade final é na verdade ``fictícia'', pois não corresponde
-a uma atividade que tenha de ser efetivamente realizada. No entanto para efeitos
-de modelação, é útil considerá-la, assumindo que é realizada após todas as
-outras da rede terem terminado e que tem duração de 0 unidades de tempo. Nestas
-condições, o tempo inicial da atividade final indica a duração do
-projeto.
+a uma atividade que tenha de ser efetivamente realizada. De igual modo,
+atividade inicial é  ``fictícia''. No entanto para efeitos de modelação, é útil
+considerá-las, para efeitos de modelação do modelo dual. Assume-se que
+a atividade final é realizada após todas as outras da rede terem terminado e que
+tem duração de 0 unidades de tempo. A atividade inicial tem, de igual modo,
+duração de 0 unidades de tempo, sendo pertinente usá-la para a transfonação no
+modelo dual.Nestas condições, o tempo inicial da atividade final indica
+a duração do projeto.
+
 
 Uma vez que a variável $T_{fim}$ indica a duração do projeto, a função
 objetivo fica simplesmente:
 
-\begin{displaymath} \min~z = T_{fim} \end{displaymath}
+\begin{displaymath} 
+	\min~z = T_{fim}-T_{ini} 
+\end{displaymath}
 
 \subsection{Restrições}
 
-Com as restrições pretende-se indicar o espaço de possíveis soluções. Sabe-se que uma
-atividade não pode começar sem que as que lhe precedem tenham terminado.
+Com as restrições pretende-se indicar o espaço de possíveis soluções. Sabe-se
+que uma atividade não pode começar sem que as que lhe precedem tenham terminado.
 Qualquer solução que obedeça a este princípio é uma solução admissível para
-o problema. Para escrever as restrições é por isso necessário saber quando uma atividade termina. Ora, sabendo que as nossas variáveis de decisão indicam o tempo em que
-cada atividade se inicia e que temos a duração das mesmas como parâmetro do modelo, podemos dizer que o tempo final de uma atividade corresponde a somar o seu tempo de início com a sua duração. Ou seja:
+o problema. Para escrever as restrições é por isso necessário saber quando uma
+atividade termina. Ora, sabendo que as variáveis de decisão usadas indicam
+o tempo em que cada atividade se inicia e que se tem a duração das mesmas como
+parâmetro do modelo, pode-se dizer que o tempo final de uma atividade
+corresponde a somar o seu tempo de início com a sua duração. Ou seja:
 
 \begin{displaymath} Tf_{i} = T_{i} + D_{i} \end{displaymath}
 
@@ -56,7 +68,7 @@ Onde:
 Dizer que uma atividade não pode começar sem que as que lhe precedem tenham
 terminado é o mesmo que dizer que o tempo inicial da atividade tem que ser maior
 que o tempo final de todas as atividades que lhe precedem. Assumindo que se tem
-uma atividade $j$ que precede uma atividade $i$, podemos escrever que:
+uma atividade $j$ que precede uma atividade $i$, pode-se escrever que:
 
 \begin{displaymath} T_{i} \geq T_{j} + D_{j} \end{displaymath}
 
@@ -64,7 +76,94 @@ O modelo terá por isso uma restrição deste tipo por cada nodo e por cada
 atividade precedente ao nodo. Ou seja, um nó que tenha apenas 1 precedência,
 apenas originará uma restrição, enquanto que se o nodo tiver por exemplo
 3 precedências, dará origem a 3 restrições --- uma restrição para cada precedência
-do nodo. As restrições completas podem ser consultadas na secção \ref{p2:sec:ficheiro_input}
+do nodo. 
+As restrições completas:
+
+\begin{itemize}
+
+\item{Nodo Inicial
+	\begin{align*}
+		T_ {ini} \ge 0 + 0 &         &         &         &         &         &
+	\end{align*}}
+
+\item Nodo 0
+	\begin{align*}
+		T_0 \ge T_{ini} + 0 &         &         &         &         &         &
+	\end{align*}
+
+
+\item Nodo 1
+	\begin{align*}
+T_1 \ge T_0 + 4 &         &         &         &         &         &
+	\end{align*}
+
+
+\item Nodo 3
+\begin{align*}
+T_3 \ge T_1 + 6 &         &         &         &         &         &\\
+T_3 \ge T_5 + 4 &         &         &         &         &         &\\
+T_3 \ge T_4 + 9 &         &         &         &         &         &
+	\end{align*}
+
+
+
+\item Nodo 4
+\begin{align*}
+T_4 \ge T_0 + 4 &         &         &         &         &         &\\
+T_4 \ge T_7 + 6 &         &         &         &         &         &
+	\end{align*}
+
+
+\item Nodo 5
+\begin{align*}
+        T_5 \ge T_4 + 9  &         &         &         &         &         &\\
+        T_5 \ge T_7 + 6  &         &         &         &         &         &\\
+        T_5 \ge T_{10} + 8  &         &         &         &         &         &
+	\end{align*}
+
+
+\item Nodo 6
+	\begin{align*}
+	T_6 \ge T_{ini} + 0 &         &         &         &         &         &
+	\end{align*}
+
+\item Nodo 7
+\begin{align*}
+       T_7 \ge T_6 + 5  &         &         &         &         &         &\\
+	\end{align*}
+
+
+\item Nodo 9
+\begin{align*}
+T_9 \ge T_7 + 6   &         &         &         &         &         &\\
+T_9 \ge T_{11} + 7 &         &         &         &         &         &\\
+T_9 \ge T_{10} + 8 &         &         &         &         &         &
+	\end{align*}
+
+
+\item Nodo 10
+\begin{align*}
+		T_{10} \ge T_6 + 5 &         &         &         &         &         &
+	\end{align*}
+
+\item Nodo 11
+\begin{align*}
+		T_{11} \ge T_{10} + 8 &         &         &         &         &         &	
+\end{align*}
+
+
+
+\item Nodo final
+\begin{align*}
+		T_{fim} \ge T_3 + 2 &         &         &         &         &         &\\
+T_{fim} \ge T_5 + 4 &         &         &         &         &         &\\
+T_{fim} \ge T_9 + 2 &         &         &         &         &         &
+	\end{align*}
+
+
+\end{itemize}
+
+podem ser consultadas na secção~\ref{p2:sec:ficheiro_input}
 
 Visto que os tempos não podem ser negativos, neste modelo tem-se ainda
 restrições de não-negatividade:
@@ -143,51 +242,13 @@ O output apresentado a seguir foi obtido por \emph{copy-paste} direto resultante
 
 \begin{verbatim} 
 
-Value of objective function: 26
-
-Actual values of the variables:
-Tfim                           26
-Tini                            0
-T0                              0
-T1                              4
-T3                             24
-T5                             20
-T4                             11
-T7                              5
-T10                             5
-T6                              0
-T9                             20
-T11                            13
-
-Actual values of the constraints:
-R1                              0
-R2                              4
-R3                             20
-R4                              4
-R5                             13
-R6                             11
-R7                              6
-R8                              9
-R9                             15
-R10                            15
-R11                             0
-R12                             5
-R13                            15
-R14                             7
-R15                            15
-R16                             5
-R17                             8
-R18                             2
-R19                             6
-R20                             6
-
-
-
 \end{verbatim}
 
 \section{Resultado}
 
-O resultado obtido indica uma duração total do projeto de 26 unidades de tempo. Os tempos iniciais de cada atividade representados graficamente podem ser vistos na figura \ref{p2:fig:tempos_inicio} :
+O resultado obtido indica uma duração total do projeto de 26 unidades de tempo.
+Os tempos iniciais de cada atividade representados graficamente podem ser vistos
+na figura~\ref{p2:fig:tempos_inicio}:
 
 \begin{figure}[<+htpb+>] \centering
 	\includegraphics[scale=0.5]{./img/p2_tempos_inicio} \caption{Grafo com
@@ -195,17 +256,6 @@ O resultado obtido indica uma duração total do projeto de 26 unidades de tempo
 \label{p2:fig:tempos_inicio}
  \end{figure}
 
-O Diagrama de Gantt correspondente pode ser visto na figura \ref{p2:fig:diagrama_gantt_caminho_crit}:
-
-\begin{figure}[<+htpb+>] \centering
-	\includegraphics[width=\textwidth]{./img/p2_diagrama_gantt_caminho_crit}
-	\caption{Diagrama de \emph{Gantt} com indicação do caminho crítico a vermelho}
-\label{p2:fig:diagrama_gantt_caminho_crit} \end{figure}
-
-Visto serem atividades fictícias de duração nula, representam-se atividades
-iniciais e finais a cinzento. As barras a vermelho indicam o caminho crítico,
-enquanto que as barras a verde representam atividades não pertencentes ao
-caminho crítico.
 
 \section{Validação do modelo}
 
@@ -318,45 +368,3 @@ Tfim >= T9 + 2;
 
 Assim conclui-se que todas as restrições são respeitadas.
 
-\section{Atividade no caminho crítico}
-
-Considere-se a atividade 7, que faz parte do caminho crítico. Por análise do
-resultado do modelo verifica-se que esta atividade deve começar em $T = 5~u.t$. Como
-é facilmente visível no Diagrama de \emph{Gantt} apresentado na figura \ref{p2:fig:diagrama_gantt_caminho_crit},
-caso a atividade comece um pouco mais tarde, irá atrasar o começo da atividade
-que lhe sucede, neste caso a atividade 4. Se a atividade 4 começar mais tarde,
-por sua vez vai atrasar o início da atividade 5, que lhe sucede. Seguindo
-a mesma lógica a atividade 5 começando mais tarde atrasa o início da atividade
-3. Visto a atividade 3 ser a última atividade a ser realizada, tal atraso implica um atraso no tempo de execução total do projeto.
-
-Obtém-se resultados semelhantes caso sejam provocados atrasos em outras atividades pertencentes ao caminho crítico. Com isto mostra-se o impacto que um atraso na execução de uma atividade no caminho crítico tem no projeto total.
-
-\section{Atividade fora do caminho crítico}
-
-Considere-se a atividade 1, não pertencente ao caminho crítico. De acordo com os
-resultados do modelo, esta atividade deve ter início em $T_{1} = 4~u.t$. Por análise do Diagrama de Gantt da figura \ref{p2:fig:diagrama_gantt_caminho_crit}, verifica-se que no entanto, esta pode começar um pouco mais tarde. A atividade 1 apenas
-é sucedida pela atividade 3, sendo que a atividade 3 apenas deve ter início em
-$T_{3} = 24~u.t$. Como restrição do modelo, sabemos que a soma do tempo de início de
-uma atividade com a sua duração não deve ser maior que o tempo de início de
-qualquer atividade sucessora. No limite, uma atividade acaba imediatamente antes
-de uma sua sucessora começar. Traduzindo esse facto em termos matemáticos, no
-caso da atividade 1 temos que:
-
-\begin{displaymath} T_{1} + D_{1} = T_{3} \end{displaymath}
-
-Onde:
-
-\begin{itemize} \item[$T_{1}$] Tempo de início da atividade 1 \item[$D_{1}$]
-		Duração da atividade 1 \item[$T_{3}$] Tempo de início da atividade
-			3 \end{itemize}
-
-Resolvendo a equação em ordem a $T_{1}$ temos:
-
-\begin{displaymath}
-T_{1} + 6 = 24~u.t \Leftrightarrow T_{1} = 18~u.t
-\end{displaymath}
-
-Isto significa que no limite, a atividade 1 pode começar em $T_{1} = 18~u.t$ sem que
-haja atrasos no projeto, embora os resultados do modelo sugiram um tempo inicial $T_{1} = 4~u.t$.
-
-A situação descrita aqui para a atividade 1 acontece também com outras atividades que não pertencem ao caminho crítico. A conclusão que se tira é que pode haver atrasos (dentro de certos limites) nas atividades que não pertencem ao caminho crítico sem que isso tenha influência no tempo total do projeto.
