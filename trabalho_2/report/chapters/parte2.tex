@@ -46,6 +46,8 @@ objetivo fica simplesmente:
 	\min~z = T_{fim}-T_{ini} 
 \end{displaymath}
 
+A variável T_{ini} está aqui para efeitos de futura modelação do dual.
+
 \subsection{Restrições}
 
 Com as restrições pretende-se indicar o espaço de possíveis soluções. Sabe-se
@@ -163,7 +165,6 @@ T_{fim} \ge T_9 + 2 &         &         &         &         &         &
 
 \end{itemize}
 
-podem ser consultadas na secção~\ref{p2:sec:ficheiro_input}
 
 Visto que os tempos não podem ser negativos, neste modelo tem-se ainda
 restrições de não-negatividade:
@@ -172,199 +173,107 @@ restrições de não-negatividade:
 	4,5,6,7,9,10,11,fim\}} \end{displaymath}
 
 
-\section{Ficheiro \emph{input}}
-\label{p2:sec:ficheiro_input}
-O ficheiro de \emph{input} é constituído pela função objetivo e restrições, detalhadas
-em secções anteriores.
+\section{Construção do modelo dual do Trabalho 1}
+
+
+Neste passo, colocaram-se em evidencia os valores constantes das restrições do
+modelo primal, correspondentes às durações das atividades, assim como as variáveis duais $Yi$ para cala linha. Assim, temos que:
 
 \begin{verbatim}
 
-=== FUNCAO objetivo ===
+ - Nodo Inicial
+Tini  >=  0       ...... Y1
 
-min: Tfim;
+ - Nodo 0
+T0  -  Tini >= 0  ...... Y2
+
+ - Nodo 1
+T1  -  T0  >= 4   ...... Y3
+
+ - Nodo 3
+T3  -  T1  >= 6   ...... Y4
+T3  -  T5  >= 4   ...... Y5
+T3  -  T4  >= 9   ...... Y6
+
+ - Nodo 4
+T4  -  T0  >= 4   ...... Y7
+T4  -  T7  >= 6   ...... Y8
+
+ - Nodo 5
+T5  -  T4  >= 9   ...... Y9
+T5  -  T7  >= 6   ...... Y10
+T5  -  T10  >= 8  ...... Y11
+
+ - Nodo 6
+T6  -  Tini  >= 0 ...... Y12
+
+ - Nodo 7
+T7  -  T6  >= 5   ...... Y13
+
+ - Nodo 9
+T9  -  T7  >= 6   ...... Y14
+T9  -  T11  >= 7  ...... Y15
+T9  -  T10  >= 8  ...... Y16
+
+ - Nodo 10
+T10  -  T6  >= 5  ...... Y17
+
+ - Nodo 11
+T11  -  T10  >= 8 ...... Y18
+
+ - Nodo final
+Tfim  -  T3  >= 2 ...... Y19
+Tfim  -  T5  >= 4 ...... Y20
+Tfim  -  T9  >= 2 ...... Y21
+
+\end{verbatim}
+
+A função objetivo com os custos associados, obtidos do valor das das durações
+das atividades figura da seguinte forma:
+
+\begin{verbatim}
+
+max : 0Y1  +  0Y2  +  4Y3  +  6Y4    
+      4Y5  +  9Y6  +  4Y7  +  6Y8  +  9Y9 
+      6Y10 +  8Y11 +  0Y12 +  
+      5Y13 +  6Y14 +  7Y15 +  8Y16 +  
+      5Y17 +  6Y18 +  2Y19 +  4Y20 + 2Y21 
+
+\end{verbatim}
+
+As restrições resultantes no processo anteriormente descrito são as seguintes:
 
 
-=== RESTRICOES ===
+\begin{verbatim}
 
-//Nodo Inicial
-Tini >= 0 + 0;
+Y1 - Y2 - Y12  <= -1 .............. Tini 
 
-//Nodo 0
-T0 >= Tini + 0;
+Y2 - Y3 - Y7   <= 0  .............. T0
 
-//Nodo 1
-T1 >= T0 + 4;
+Y3 - Y4 <= 0  ..................... T1
 
-//Nodo 3
-T3 >= T1 + 6;
-T3 >= T5 + 4;
-T3 >= T4 + 9;
+Y5 + Y6 - Y19  <= 0  .............. T3
 
-//Nodo 4
-T4 >= T0 + 4;
-T4 >= T7 + 6;
+- Y6 + Y7 - Y19 + Y8  <= 0 ........ T4
 
-//Nodo 5
-T5 >= T4 + 9;
-T5 >= T7 + 6;
-T5 >= T10 + 8;
 
-//Nodo 6
-T6 >= Tini + 0;
+- Y5 + Y9 + Y1O + Y11 - Y20 <= 0 .. T5
 
-//Nodo 7
-T7 >= T6 + 5;
+Y12 - Y17 - Y13  <= 0 ............. T6
 
-//Nodo 9
-T9 >= T7 + 6;
-T9 >= T11 + 7;
-T9 >= T10 + 8;
+- Y8 - Y10 - Y14 + Y13 <= 0 ....... T7
 
-//Nodo 10
-T10 >= T6 + 5;
+Y14 + Y15 + Y16 - Y21 <= 0 ........ T9
 
-//Nodo 11
-T11 >= T10 + 8;
+- Y11 - Y16 - Y18 + Y17 <= 0 ...... T10
 
-//Nodo final
-Tfim >= T3 + 2;
-Tfim >= T5 + 4;
-Tfim >= T9 + 2;
+Y18 - Y15  <= 0 ................... T11
+
+Y19 + Y20 + Y21 <= 1 .............. Tfim
 
 \end{verbatim}
 
 
 
-\newpage
-\section{\emph{Output} produzido pelo \texttt{lp\_solve}}
 
-O output apresentado a seguir foi obtido por \emph{copy-paste} direto resultante da execução do \emph{lp\_solve} num sistema linux para o ficheiro de input apresentado anteriormente:
-
-\begin{verbatim} 
-
-\end{verbatim}
-
-\section{Resultado}
-
-O resultado obtido indica uma duração total do projeto de 26 unidades de tempo.
-Os tempos iniciais de cada atividade representados graficamente podem ser vistos
-na figura~\ref{p2:fig:tempos_inicio}:
-
-\begin{figure}[<+htpb+>] \centering
-	\includegraphics[scale=0.5]{./img/p2_tempos_inicio} \caption{Grafo com
-	tempo de início de cada atividade (em unidades de tempo arbitrárias)}
-\label{p2:fig:tempos_inicio}
- \end{figure}
-
-
-\section{Validação do modelo}
-
-Para validar os resultados, tanto na função objetivo como nas restrições,
-substituímos os valores das variáveis de decisão pelo valor que estas tomam na
-solução que o \texttt{lp\_solve} indica como ótima. A ideia é verificar que os valores das
-variáveis de decisão obtidos confirmam o valor da função objetivo obedecendo
-a todas as restrições.
-
-Para evitar ao máximo o erro humano, a substituição de variáveis foi feita
-recorrendo a ferramentas que auxiliaram a substituição automática das variáveis
-pelo seu valor.
-
-\subsection{Variáveis de decisão}
-
-No resultado obtido, todas as variáveis tomam um valor maior ou igual a 0, tal
-como seria de esperar.
-
-\subsection{Função objetivo}
-
-Neste modelo a função objetivo consiste apenas no valor de uma variável,
-$T_{fim}$, que vale 26 unidades de tempo na solução ótima. Por motivos que não fazem parte do
-âmbito deste trabalho, o valor esperado para a duração mínima
-do projeto deverá ser o mesmo valor de duração encontrado no caminho crítico da
-Parte I. O valor obtido corresponde de facto ao esperado, uma vez que a duração do
-caminho crítico obtido na Parte I foi também igual a 26 unidades de tempo.
-
-
-\subsection{Restrições}
-
-
-\begin{verbatim} 
-
-//Nodo Inicial
-Tini >= 0 + 0;
-0 >= 0 + 0;
-
-//Nodo 0
-T0 >= Tini + 0; 
-0 >= 0 + 0;
-
-//Nodo 1
-T1 >= T0 + 4; 
-4 >= 0 + 4;
-
-//Nodo 3
-T3 >= T1 + 6; 
-24 >= 4 + 6;
-
-T3 >= T5 + 4; 
-24 >= 20 + 4;
-
-T3 >= T4 + 9; 
-24 >= 11 + 9;
-
-//Nodo 4
-T4 >= T0 + 4; 
-11 >= 0 + 4;
-
-T4 >= T7 + 6; 
-11 >= 5 + 6;
-
-//Nodo 5
-T5 >= T4 + 9; 
-20 >= 11 + 9;
-
-T5 >= T7 + 6; 
-20 >= 5 + 6;
-
-T5 >= T10 + 8; 
-20 >= 5 + 8;
-
-//Nodo 6
-T6 >= Tini + 0; 
-0 >= 0 + 0;
-
-//Nodo 7
-T7 >= T6 + 5; 
-5 >= 0 + 5;
-
-//Nodo 9
-T9 >= T7 + 6; 
-20 >= 5 + 6;
-
-T9 >= T11 + 7; 
-20 >= 13 + 7;
-
-T9 >= T10 + 8; 
-20 >= 5 + 8;
-
-//Nodo 10
-T10 >= T6 + 5; 
-5 >= 0 + 5;
-
-//Nodo 11
-T11 >= T10 + 8; 
-13 >= 5 + 8;
-
-//Nodo final
-Tfim >= T3 + 2; 
-26 >= 24 + 2;
-
-Tfim >= T5 + 4; 
-26 >= 20 + 4;
-
-Tfim >= T9 + 2; 
-26 >= 20 + 2;
-
-\end{verbatim}
-
-Assim conclui-se que todas as restrições são respeitadas.
 
