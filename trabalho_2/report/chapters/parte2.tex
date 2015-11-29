@@ -46,7 +46,7 @@ objetivo fica simplesmente:
 	\min~z = T_{fim}-T_{ini} 
 \end{displaymath}
 
-A variável T_{ini} está aqui para efeitos de futura modelação do dual.
+A variável $T_{ini}$ está aqui para efeitos de futura modelação do dual.
 
 \subsection{Restrições}
 
@@ -176,8 +176,49 @@ restrições de não-negatividade:
 \section{Construção do modelo dual do Trabalho 1}
 
 
+\subsection{Variáveis de decisão}
+
+Dado o problema primal anterior, é  necessário associar variáveis de decisão
+duais ao modelo $Y_i$, para cada restrição i do problema anterior descrito. Por
+exemplo, uma restrição no modelo primal é $T_{ini} \ge 0$. Como essa é a primeira
+linha, então a variável dual associada a essa restrição é $Y1$.
+
+Cada variável de decisão na função objetivo tem um custo associado. A variável
+$T_{fim}$ tem custo 1 e a variável $T_{ini}$ tem custo -1. Todas as outras variáveis
+$T_i \forall i_{\in\{0, 1, 3, 4,5,6,7,9,10,11\}}$ têm o custo 0. No modelo dual,
+estes valores corresponderão ao coeficiente de valor constante em cada
+inequação.
+
+\subsection{Restrições}
+Para cada variável de decisão do problema primal $ T_i \forall i_{\in\{ini, 0,
+1, 3,4,5,6,7,9,10,11,fim\}}$ procuraram-se ocorrências destas nas linhas de cada
+restrição, sendo depois associada a variável $Y_i$ dessa linha, multiplicada
+pelo custo de $T_i$ no modelo primal que ocorre nessa linha. Por exemplo,
+a variável $T_{ini}$ ocorre na linhas de $Y_1$, $Y_2$ $Y_{12}$, sendo o seu
+custo 1, -1 e -1, respetivamente. Como já foi dito, o custo da variável de de
+decisão na função objetivo passa a ser o valor do coeficiente constante da
+inequação da restrição, associado a $T_i$. O problema primal é de minimização
+e está na forma canónica (restrições de $\ge$). Então o dual é de maximização
+e todas as restrições serão de $\le$.Para o exemplo dado, a nova restrição do
+modelo dual passa a ser: $$Y_1 - Y_2 - Y_{12} \le -1$$
+
+
+\subsection{Função objetivo}
+Para a função objetivo do modelo dual, cada valor dos coeficientes constantes
+das restrições do modelo primal será o custo associado à variável $Y_i$ nessa
+linha da restrição correspondente. Por exemplo, para $X_{ini} \ge 0$ cuja
+variável dual associada é $Y_1$, na função objetivo do modelo dual estará
+$0 \times Y_i$.
+
+De igual modo, como referido anteriormente, o modelo primal é de maximização,
+logo o seu dual é de minimização.
+
+\newpage
+\subsection{Construção do modelo dual --- concretização}
 Neste passo, colocaram-se em evidencia os valores constantes das restrições do
-modelo primal, correspondentes às durações das atividades, assim como as variáveis duais $Yi$ para cala linha. Assim, temos que:
+modelo primal, correspondentes às durações das atividades, assim como as
+variáveis duais $Yi$ para cala linha. Assim, temos que:
+
 
 \begin{verbatim}
 
@@ -273,7 +314,28 @@ Y19 + Y20 + Y21 <= 1 .............. Tfim
 
 \end{verbatim}
 
+De igual modo, é necessário acrescer as restrições de não-negatividade. Assim:
+
+\begin{equation*}	
+	Y_i \ge 0~\forall i \in {\left[ 1, 21 \right]\cap\mathbb{N}}
+\end{equation*}
 
 
+\section{Conclusão}
+
+Pode-se concluir que o modelo dual é um modelo do caminho crítico. Perante
+o modelo dual construído, podem-se identificar o cumprimento dos requisitos de
+um modelo do género:
+
+\begin{itemize}
+	\item Entra na rede uma unidade de fluxo.
+	\item Sai da rede uma unidade de fluxo.
+	\item O fluxo de entrada em cada nó é igual ao fluxo de cada nó de saída.
+	\item As variáveis de decisão do modelo dual são binárias, e correspondem
+		a arcos na rede, onde podem assumir o valor 1 se pertencem ao caminho,
+		0 caso contrário.
+	\item As durações são todas positivas na função objetivo, que correspondem
+		a durações no modelo do caminho crítico.
+\end{itemize}
 
 

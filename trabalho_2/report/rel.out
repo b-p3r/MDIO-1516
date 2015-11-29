@@ -19,10 +19,9 @@
 \BOOKMARK [2][-]{subsection.2.2.2}{2.2.2 Vari\341veis de decis\343o}{section.2.2}% 19
 \BOOKMARK [2][-]{subsection.2.2.3}{2.2.3 Fun\347\343o Objetivo}{section.2.2}% 20
 \BOOKMARK [2][-]{subsection.2.2.4}{2.2.4 Restri\347\365es}{section.2.2}% 21
-\BOOKMARK [1][-]{section.2.3}{2.3 Ficheiro input}{chapter.2}% 22
-\BOOKMARK [1][-]{section.2.4}{2.4 Output produzido pelo lp\137solve}{chapter.2}% 23
-\BOOKMARK [1][-]{section.2.5}{2.5 Resultado}{chapter.2}% 24
-\BOOKMARK [1][-]{section.2.6}{2.6 Valida\347\343o do modelo}{chapter.2}% 25
-\BOOKMARK [2][-]{subsection.2.6.1}{2.6.1 Vari\341veis de decis\343o}{section.2.6}% 26
-\BOOKMARK [2][-]{subsection.2.6.2}{2.6.2 Fun\347\343o objetivo}{section.2.6}% 27
-\BOOKMARK [2][-]{subsection.2.6.3}{2.6.3 Restri\347\365es}{section.2.6}% 28
+\BOOKMARK [1][-]{section.2.3}{2.3 Constru\347\343o do modelo dual do Trabalho 1}{chapter.2}% 22
+\BOOKMARK [2][-]{subsection.2.3.1}{2.3.1 Vari\341veis de decis\343o}{section.2.3}% 23
+\BOOKMARK [2][-]{subsection.2.3.2}{2.3.2 Restri\347\365es}{section.2.3}% 24
+\BOOKMARK [2][-]{subsection.2.3.3}{2.3.3 Fun\347\343o objetivo}{section.2.3}% 25
+\BOOKMARK [2][-]{subsection.2.3.4}{2.3.4 Constru\347\343o do modelo dual \204 concretiza\347\343o}{section.2.3}% 26
+\BOOKMARK [1][-]{section.2.4}{2.4 Conclus\343o}{chapter.2}% 27
